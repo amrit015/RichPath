@@ -1,3 +1,7 @@
+* This version is compiled for sdk 34 with gradle 8.3.2.
+--------------------------------------------------------
+Original version:
+
 ## *** Library maintenance is paused until further notice! ***
 
 
