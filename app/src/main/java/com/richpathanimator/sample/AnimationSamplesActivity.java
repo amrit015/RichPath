@@ -7,6 +7,7 @@ import android.view.animation.LinearInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.pathanimator.sample.R;
 import com.richpath.RichPath;
 import com.richpath.RichPathView;
 import com.richpathanimator.RichPathAnimator;

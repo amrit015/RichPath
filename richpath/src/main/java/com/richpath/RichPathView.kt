@@ -9,16 +9,16 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.IntRange
 import androidx.appcompat.widget.AppCompatImageView
-import com.richpath.pathparser.PathParser
 import com.richpath.model.Vector
-import org.xmlpull.v1.XmlPullParserException
+import com.richpath.pathparser.PathParser
 import com.richpath.util.XmlParser
+import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
 import kotlin.math.min
 
-class RichPathView(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : AppCompatImageView(context, attrs, defStyleAttr) {
+class RichPathView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AppCompatImageView(context, attrs, defStyleAttr) {
 
-    constructor(context: Context?, attrs: AttributeSet?): this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?): this(context, attrs, 0)
 
     private lateinit var vector: Vector
     private var richPathDrawable: RichPathDrawable? = null

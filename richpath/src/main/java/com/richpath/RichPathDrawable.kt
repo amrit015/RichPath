@@ -1,15 +1,20 @@
 package com.richpath
 
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.ColorFilter
+import android.graphics.Matrix
+import android.graphics.Path
+import android.graphics.PixelFormat
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import androidx.annotation.IntRange
 import com.richpath.listener.OnRichPathUpdatedListener
+import com.richpath.model.Vector
 import com.richpath.pathparser.PathParser
 import com.richpath.util.PathUtils
-import com.richpath.model.Vector
 import kotlin.math.min
 
 class RichPathDrawable(private val vector: Vector?, private val scaleType: ImageView.ScaleType): Drawable() {
@@ -21,9 +26,9 @@ class RichPathDrawable(private val vector: Vector?, private val scaleType: Image
         listenToPathsUpdates()
     }
 
-    override fun onBoundsChange(bounds: Rect?) {
+    override fun onBoundsChange(bounds: Rect) {
         super.onBoundsChange(bounds)
-        bounds?.let {
+        bounds.let {
             if (it.width() > 0 && it.height() > 0) {
                 width = it.width()
                 height = it.height()

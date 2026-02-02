@@ -3,14 +3,21 @@ package com.richpathanimator.sample
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.pathanimator.sample.kt.R
 import com.richpath.RichPath
-import kotlinx.android.synthetic.main.activity_compound_view_samples.*
+import com.richpath.RichPathView
 
 class CompoundViewSamplesActivity : AppCompatActivity() {
+
+    // Declare the view variable
+    private lateinit var colorPickerRichPathView: RichPathView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_compound_view_samples)
+
+        // Initialize the view using findViewById
+        colorPickerRichPathView = findViewById(R.id.colorPickerRichPathView)
 
         val bluePath = colorPickerRichPathView.findRichPathByName("bluePath")
         val redPath = colorPickerRichPathView.findRichPathByName("redPath")
@@ -19,15 +26,18 @@ class CompoundViewSamplesActivity : AppCompatActivity() {
 
         colorPickerRichPathView.onPathClickListener = object : RichPath.OnPathClickListener {
             override fun onClick(richPath: RichPath) {
+                // Note: The original code used ?.strokeAlpha = 0f directly.
+                // Since findRichPathByName returns a nullable RichPath?, we use safe calls (?.) here.
                 bluePath?.strokeAlpha = 0f
                 redPath?.strokeAlpha = 0f
                 greenPath?.strokeAlpha = 0f
                 purplePath?.strokeAlpha = 0f
 
                 if (richPath == bluePath
-                        || richPath == redPath
-                        || richPath == greenPath
-                        || richPath == purplePath) {
+                    || richPath == redPath
+                    || richPath == greenPath
+                    || richPath == purplePath
+                ) {
                     richPath.strokeAlpha = 0.5f
                     richPath.name?.let { showToast(it) }
                 }

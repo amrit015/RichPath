@@ -1,38 +1,73 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.github.dcendents.android-maven'
-group = 'com.github.tarek360'
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'maven-publish' // Required for JitPack
+}
 
 android {
+    namespace 'com.richpath.animator'
+
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "v1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        // Updated to AndroidX runner
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    // Prepare for publishing
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "androidx.appcompat:appcompat:$appcompatVersion"
-    implementation project(path: ':richpath')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation project(':richpath')
 
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:$espressoVersion", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testImplementation "junit:junit:$junitVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Updated to standard stdlib (jdk7 is deprecated)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.kotlin_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompatVersion"
+
+    testImplementation "junit:junit:$rootProject.ext.junitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.espressoVersion"
+}
+
+// JitPack Publishing Configuration
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.mattlashey.RichPath'
+                artifactId = 'animator'
+                version = 'v1.0'
+            }
+        }
+    }
 }
